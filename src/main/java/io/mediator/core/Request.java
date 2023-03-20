@@ -1,4 +1,4 @@
-package io.jkratz.mediator.core;
+package io.mediator.core;
 
 public interface Request<TResponse> {
 }

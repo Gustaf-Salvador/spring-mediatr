@@ -1,6 +1,4 @@
-package io.jkratz.mediator.core;
-
-import io.jkratz.mediator.core.Command;
+package io.mediator.core;
 
 public interface CommandHandler<TCommand extends Command> {
 

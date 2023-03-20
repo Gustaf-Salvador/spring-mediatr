@@ -1,4 +1,4 @@
-package io.jkratz.mediator.core.exception;
+package io.mediator.core.exception;
 
 public class NoEventHandlersException extends RuntimeException {
 

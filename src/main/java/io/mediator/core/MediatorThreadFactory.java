@@ -1,4 +1,4 @@
-package io.jkratz.mediator.core;
+package io.mediator.core;
 
 import java.util.concurrent.ThreadFactory;
 

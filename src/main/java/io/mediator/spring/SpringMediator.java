@@ -1,12 +1,19 @@
-package io.jkratz.mediator.spring;
+package io.mediator.spring;
 
-import io.jkratz.mediator.core.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import io.mediator.core.Command;
+import io.mediator.core.CommandHandler;
+import io.mediator.core.Event;
+import io.mediator.core.Mediator;
+import io.mediator.core.MediatorThreadFactory;
+import io.mediator.core.Registry;
+import io.mediator.core.Request;
+import io.mediator.core.RequestHandler;
 
 public class SpringMediator implements Mediator {
 
@@ -41,28 +48,25 @@ public class SpringMediator implements Mediator {
     }
 
     @Override
-    public void emit(@Valid Event event) {
+    public <tEvent extends Event> void emit(tEvent event) {
         final var eventHandlers = registry.getEvent(event.getClass());
-        EventHandler[] eventHandlersArray = (EventHandler[]) eventHandlers.toArray();
 
-        for (int i = 0; i > eventHandlers.size(); i++) {
-            EventHandler handler = eventHandlersArray[i];
-            logger.debug("Dispatching " + event.getClass().getSimpleName() + " to handler " + handler.getClass().getSimpleName());
-            handler.handle(event);
-        }
+        eventHandlers.forEach(eventHandler -> {
+            logger.debug("Dispatching " + event.getClass().getSimpleName() + " to handler " + eventHandler.getClass().getSimpleName());
+            eventHandler.handle(event);
+        });
     }
 
     @Override
     public CompletableFuture<Void> emitAsync(@Valid Event event) {
         return CompletableFuture.runAsync(() -> {
             final var eventHandlers = registry.getEvent(event.getClass());
-            EventHandler[] eventHandlersArray = (EventHandler[]) eventHandlers.toArray();
 
-            for (int i = 0; i > eventHandlers.size(); i++) {
-                EventHandler handler = eventHandlersArray[i];
-                logger.debug("Dispatching " + event.getClass().getSimpleName() + " to handler " + handler.getClass().getSimpleName());
-                handler.handle(event);
-            }
+            eventHandlers.forEach(eventHandler -> {
+                logger.debug("Dispatching " + event.getClass().getSimpleName() + " to handler " + eventHandler.getClass().getSimpleName());
+                eventHandler.handle(event);
+            });
+
         }, executor::execute);
     }
 

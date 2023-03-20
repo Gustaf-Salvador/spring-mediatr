@@ -1,8 +1,8 @@
-package io.jkratz.mediator.core;
+package io.mediator.core;
 
-import io.jkratz.mediator.core.exception.NoCommandHandlerException;
-import io.jkratz.mediator.core.exception.NoEventHandlersException;
-import io.jkratz.mediator.core.exception.NoRequestHandlerException;
+import io.mediator.core.exception.NoCommandHandlerException;
+import io.mediator.core.exception.NoEventHandlersException;
+import io.mediator.core.exception.NoRequestHandlerException;
 
 import java.util.Set;
 

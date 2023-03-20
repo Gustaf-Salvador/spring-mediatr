@@ -1,4 +1,4 @@
-package io.jkratz.mediator.core;
+package io.mediator.core;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -35,7 +35,7 @@ public interface Mediator {
      *
      * @param event the event to send
      */
-    void emit(Event event);
+    <tEvent extends Event> void emit(tEvent event);
 
     /**
      * Sends the event to all registered {@link EventHandler}s for the particular event asynchronously on another thread.

@@ -1,22 +1,21 @@
-package io.jkratz.mediator.spring;
+package io.mediator.spring;
 
-import io.jkratz.mediator.core.EventHandler;
 import org.springframework.context.ApplicationContext;
 
-public class EventHandlerProvider<T extends EventHandler<?>> {
+public abstract class AbstractHandlerProvider<T> {
 
     private final ApplicationContext applicationContext;
     private final Class<T> type;
     private T handler;
 
-    public EventHandlerProvider(ApplicationContext applicationContext, Class<T> type) {
+    protected AbstractHandlerProvider(ApplicationContext applicationContext, Class<T> type) {
         this.applicationContext = applicationContext;
         this.type = type;
     }
 
     public T getHandler() {
         if (handler == null) {
-            handler = (T) applicationContext.getBean(String.valueOf(type));
+            handler = (T) applicationContext.getBean(type);
         }
         return handler;
     }

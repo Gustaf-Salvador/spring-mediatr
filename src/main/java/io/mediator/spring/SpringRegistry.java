@@ -1,19 +1,19 @@
-package io.jkratz.mediator.spring;
+package io.mediator.spring;
 
 import java.util.HashSet;
 import java.util.Set;
-import io.jkratz.mediator.core.Command;
-import io.jkratz.mediator.core.CommandHandler;
-import io.jkratz.mediator.core.Event;
-import io.jkratz.mediator.core.EventHandler;
-import io.jkratz.mediator.core.Registry;
-import io.jkratz.mediator.core.Request;
-import io.jkratz.mediator.core.RequestHandler;
-import io.jkratz.mediator.core.exception.DuplicateCommandHandlerRegistrationException;
-import io.jkratz.mediator.core.exception.DuplicateRequestHandlerRegistrationException;
-import io.jkratz.mediator.core.exception.NoCommandHandlerException;
-import io.jkratz.mediator.core.exception.NoEventHandlersException;
-import io.jkratz.mediator.core.exception.NoRequestHandlerException;
+import io.mediator.core.Command;
+import io.mediator.core.CommandHandler;
+import io.mediator.core.Event;
+import io.mediator.core.EventHandler;
+import io.mediator.core.Registry;
+import io.mediator.core.Request;
+import io.mediator.core.RequestHandler;
+import io.mediator.core.exception.DuplicateCommandHandlerRegistrationException;
+import io.mediator.core.exception.DuplicateRequestHandlerRegistrationException;
+import io.mediator.core.exception.NoCommandHandlerException;
+import io.mediator.core.exception.NoEventHandlersException;
+import io.mediator.core.exception.NoRequestHandlerException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,17 +89,18 @@ public class SpringRegistry implements Registry {
         synchronized (this) {
             if (!initialized) {
                 applicationContext.getBeansOfType(RequestHandler.class)
-                    .forEach((name, handler) -> registerRequestHandler(handler.getClass().getName()));
+                    .forEach((name, handler) -> registerRequestHandler(handler.getClass().getSimpleName()));
                 applicationContext.getBeansOfType(EventHandler.class)
-                    .forEach((name, handler) -> registerEventHandler(handler.getClass().getName()));
+                    .forEach((name, handler) -> registerEventHandler(handler.getClass().getSimpleName()));
                 applicationContext.getBeansOfType(CommandHandler.class)
-                    .forEach((name, handler) -> registerCommandHandler(handler.getClass().getName()));
+                    .forEach((name, handler) -> registerCommandHandler(handler.getClass().getSimpleName()));
                 initialized = true;
             }
         }
     }
 
     private void registerRequestHandler(String name) {
+        name = name.substring(0, 1).toLowerCase() + name.substring(1);
         logger.debug("Registering RequestHandler with name " + name);
         RequestHandler<?, ?> handler = (RequestHandler<?, ?>) applicationContext.getBean(name);
         Class<?>[] generics = GenericTypeResolver.resolveTypeArguments(handler.getClass(), RequestHandler.class);
@@ -115,6 +116,7 @@ public class SpringRegistry implements Registry {
     }
 
     private void registerEventHandler(String name) {
+        name = name.substring(0, 1).toLowerCase() + name.substring(1);
         logger.debug("Registering EventHandler with name " + name);
         EventHandler<?> eventHandler = (EventHandler<?>) applicationContext.getBean(name);
         Class<?>[] generics = GenericTypeResolver.resolveTypeArguments(eventHandler.getClass(), EventHandler.class);
@@ -134,6 +136,7 @@ public class SpringRegistry implements Registry {
     }
 
     private void registerCommandHandler(String name) {
+        name = name.substring(0, 1).toLowerCase() + name.substring(1);
         logger.debug("Registering CommandHandler with name " + name);
         CommandHandler<?> commandHandler = (CommandHandler<?>) applicationContext.getBean(name);
         Class<?>[] generics = GenericTypeResolver.resolveTypeArguments(commandHandler.getClass(), CommandHandler.class);
