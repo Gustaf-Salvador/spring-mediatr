@@ -44,7 +44,7 @@ public class SpringMediator implements Mediator {
             final var handler = registry.getRequest(request.getClass());
             logger.debug("Dispatching " + request.getClass().getSimpleName() + " to handler " + handler.getClass().getSimpleName());
             return (TResponse) handler.handle(request);
-        }, executor::execute);
+        }, executor);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class SpringMediator implements Mediator {
                 eventHandler.handle(event);
             });
 
-        }, executor::execute);
+        }, executor);
     }
 
     @Override
@@ -83,6 +83,6 @@ public class SpringMediator implements Mediator {
             final var handler = (CommandHandler) registry.getCommand(command.getClass());
             logger.debug("Dispatching " + command.getClass().getSimpleName() + " to handler " + handler.getClass().getSimpleName());
             handler.handle(command);
-        }, executor::execute);
+        }, executor);
     }
 }

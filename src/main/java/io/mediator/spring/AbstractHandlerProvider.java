@@ -15,7 +15,7 @@ public abstract class AbstractHandlerProvider<T> {
 
     public T getHandler() {
         if (handler == null) {
-            handler = (T) applicationContext.getBean(type);
+            handler = applicationContext.getBean(type);
         }
         return handler;
     }
