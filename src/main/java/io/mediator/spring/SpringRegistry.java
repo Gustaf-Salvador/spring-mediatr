@@ -1,7 +1,15 @@
 package io.mediator.spring;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.GenericTypeResolver;
+
 import io.mediator.core.Command;
 import io.mediator.core.CommandHandler;
 import io.mediator.core.Event;
@@ -14,13 +22,6 @@ import io.mediator.core.exception.DuplicateRequestHandlerRegistrationException;
 import io.mediator.core.exception.NoCommandHandlerException;
 import io.mediator.core.exception.NoEventHandlersException;
 import io.mediator.core.exception.NoRequestHandlerException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import java.util.HashMap;
-import java.util.Map;
-import org.springframework.core.GenericTypeResolver;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class SpringRegistry implements Registry {

@@ -1,10 +1,10 @@
 package io.mediator.core;
 
+import java.util.Set;
+
 import io.mediator.core.exception.NoCommandHandlerException;
 import io.mediator.core.exception.NoEventHandlersException;
 import io.mediator.core.exception.NoRequestHandlerException;
-
-import java.util.Set;
 
 public interface Registry {
 

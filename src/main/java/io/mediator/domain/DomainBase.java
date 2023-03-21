@@ -1,6 +1,7 @@
 package io.mediator.domain;
 
 import java.util.concurrent.CompletableFuture;
+
 import io.mediator.core.Command;
 import io.mediator.core.Mediator;
 

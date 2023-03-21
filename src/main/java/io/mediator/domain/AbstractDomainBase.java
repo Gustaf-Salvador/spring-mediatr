@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
 import io.mediator.core.Command;
 import io.mediator.core.Mediator;
 import io.mediator.core.MediatorThreadFactory;

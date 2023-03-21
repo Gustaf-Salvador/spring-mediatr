@@ -3,8 +3,10 @@ package io.mediator.spring;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import io.mediator.core.Command;
 import io.mediator.core.CommandHandler;
 import io.mediator.core.Event;
@@ -12,7 +14,6 @@ import io.mediator.core.Mediator;
 import io.mediator.core.MediatorThreadFactory;
 import io.mediator.core.Registry;
 import io.mediator.core.Request;
-import io.mediator.core.RequestHandler;
 
 public class SpringMediator implements Mediator {
 
@@ -33,7 +34,7 @@ public class SpringMediator implements Mediator {
     @SuppressWarnings("unchecked")
 	@Override
     public <TRequest extends Request<TResponse>, TResponse> TResponse dispatch(TRequest request) {
-        final var handler = (RequestHandler<TRequest, ?>) registry.getRequest(request.getClass());
+        final var handler = registry.getRequest(request.getClass());
         logger.debug("Dispatching " + request.getClass().getSimpleName() + " to handler " + handler.getClass().getSimpleName());
         return (TResponse) handler.handle(request);
     }
