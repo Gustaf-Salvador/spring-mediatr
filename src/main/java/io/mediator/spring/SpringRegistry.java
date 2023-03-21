@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.core.GenericTypeResolver;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class SpringRegistry implements Registry {
 
     private final ApplicationContext applicationContext;
@@ -42,7 +43,6 @@ public class SpringRegistry implements Registry {
         }
         RequestHandlerProvider<?> provider = requestRegistry.get(requestClass);
         if (provider != null) {
-            @SuppressWarnings("unchecked")
             RequestHandler<C, R> handler = (RequestHandler<C, R>) provider.getHandler();
             return handler;
         } else {
@@ -60,7 +60,6 @@ public class SpringRegistry implements Registry {
         Set<EventHandlerProvider<?>> providers = eventRegistry.get(eventClass);
         if (providers != null) {
             for (EventHandlerProvider<?> provider : providers) {
-                @SuppressWarnings("unchecked")
                 EventHandler<E> handler = (EventHandler<E>) provider.getHandler();
                 handlers.add(handler);
             }
@@ -77,7 +76,6 @@ public class SpringRegistry implements Registry {
         }
         CommandHandlerProvider<?> provider = commandRegistry.get(commandClass);
         if (provider != null) {
-            @SuppressWarnings("unchecked")
             CommandHandler<C> handler = (CommandHandler<C>) provider.getHandler();
             return handler;
         } else {
@@ -135,7 +133,7 @@ public class SpringRegistry implements Registry {
         }
     }
 
-    private void registerCommandHandler(String name) {
+	private void registerCommandHandler(String name) {
         name = name.substring(0, 1).toLowerCase() + name.substring(1);
         logger.debug("Registering CommandHandler with name " + name);
         CommandHandler<?> commandHandler = (CommandHandler<?>) applicationContext.getBean(name);
