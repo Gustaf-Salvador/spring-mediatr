@@ -2,7 +2,9 @@ package io.mediator.core.exception;
 
 public class DuplicateRequestHandlerRegistrationException extends RuntimeException {
 
-    public DuplicateRequestHandlerRegistrationException(String Message) {
+    private static final long serialVersionUID = 4153965977656655971L;
+
+	public DuplicateRequestHandlerRegistrationException(String Message) {
         super (Message);
     }
 }

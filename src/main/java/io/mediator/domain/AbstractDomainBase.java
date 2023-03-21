@@ -19,10 +19,6 @@ public class AbstractDomainBase implements DomainBase {
         return domainEvents;
     }
 
-    private void setDomainEvents(List<Command> domainEvents) {
-        this.domainEvents = domainEvents;
-    }
-
     @Override
     public void addDomainEvent(Command eventItem) {
         domainEvents.add(eventItem);
